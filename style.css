@@ -1,0 +1,135 @@
+/* Toutes les tailles sont en rem : le réglage « taille de l'interface » change la taille de base. */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { font-size: 16px; }
+html, body {
+  margin: 0; height: 100%; overflow: hidden; background: #0b1020; color: #fff;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  touch-action: none; user-select: none; -webkit-user-select: none;
+  overscroll-behavior: none;
+}
+canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+.hidden { display: none !important; }
+button { font: inherit; color: inherit; border: 0; cursor: pointer; }
+button:focus-visible { outline: 0.2rem solid #ffd35a; outline-offset: 0.12rem; }
+
+#hud { position: fixed; inset: 0; pointer-events: none; }
+
+#topwrap {
+  position: absolute; left: 0; right: 0; top: 0; display: flex; flex-direction: column;
+  padding-top: env(safe-area-inset-top); pointer-events: none;
+}
+#top {
+  padding: 0.4rem 0.6rem; display: flex; gap: 0.4rem 0.8rem; align-items: center; flex-wrap: wrap;
+  background: #000c; font-size: 1rem; font-weight: 600;
+}
+#clock { min-width: 8rem; flex: 1 1 8rem; }
+#phase { font-weight: 800; display: block; margin-bottom: 0.2rem; font-size: 1.1rem; }
+.bar { height: 0.8rem; width: 100%; background: #000; border-radius: 0.4rem; overflow: hidden; border: 0.1rem solid #fff9; }
+.bar i { display: block; height: 100%; width: 50%; background: #ffd35a; }
+.bar.hp i { background: #ff4d55; }
+.bar.food i { background: #ff7ab0; }
+.bar.noise i { background: #6fd0ff; }
+#stats { display: flex; flex-direction: column; gap: 0.15rem; flex: 1 1 8rem; }
+.stat { display: flex; align-items: center; gap: 0.3rem; font-size: 0.9rem; }
+.stat span { width: 1.3rem; text-align: center; }
+#inv { display: flex; gap: 0.6rem; font-size: 1.1rem; white-space: nowrap; }
+#inv b, #eat b { font-size: 1.2rem; }
+#tools { display: flex; gap: 0.3rem; margin-left: auto; pointer-events: auto; }
+#tools #eat { width: auto; padding: 0 0.5rem; font-size: 1.15rem; white-space: nowrap; }
+#tools button {
+  width: 2.5rem; height: 2.5rem; border-radius: 0.6rem; background: #1c2540;
+  border: 0.12rem solid #fff; font-size: 1.4rem; font-weight: 800; line-height: 1; padding: 0;
+}
+
+#toast {
+  align-self: center; margin: 0.5rem 0.6rem 0; background: #000e; border: 0.12rem solid #ffd35a;
+  padding: 0.6rem 1rem; border-radius: 1rem; font-size: 1.15rem; font-weight: 700; line-height: 1.3;
+  opacity: 0; transition: opacity .3s; text-align: center; max-width: 94vw;
+}
+#toast.show { opacity: 1; }
+
+#joy {
+  position: absolute; left: calc(1rem + env(safe-area-inset-left)); bottom: calc(6.4rem + env(safe-area-inset-bottom));
+  width: 7.75rem; height: 7.75rem; border-radius: 50%; pointer-events: auto;
+  background: #0006; border: 0.16rem solid #fffc;
+}
+#knob {
+  position: absolute; left: 50%; top: 50%; width: 3.25rem; height: 3.25rem; margin: -1.625rem;
+  border-radius: 50%; background: #fffc; pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) { #joy { opacity: .4; } }
+
+#actions {
+  position: absolute; right: calc(0.8rem + env(safe-area-inset-right)); bottom: calc(6.4rem + env(safe-area-inset-bottom));
+  display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end; pointer-events: none;
+}
+#actions button {
+  width: 4.4rem; height: 4.4rem; border-radius: 50%; background: #1c2540;
+  border: 0.16rem solid #fff; font-size: 1.5rem; line-height: 1; padding: 0; pointer-events: auto;
+}
+#actions button small { display: block; font-size: 0.72rem; font-weight: 700; margin-top: 0.1rem; }
+#actions #act { width: 5.6rem; height: 5.6rem; font-size: 2rem; background: #245c2a; }
+#actions button.on, #actions button:active { background: #b36b00; }
+
+#build {
+  position: absolute; left: 0; right: 0; bottom: 0; pointer-events: auto;
+  padding: 0.4rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom));
+  display: flex; gap: 0.4rem; overflow-x: auto; touch-action: pan-x;
+  background: #000c; scrollbar-width: none;
+}
+#build::-webkit-scrollbar { display: none; }
+#build button {
+  flex: 0 0 auto; min-width: 4.6rem; padding: 0.35rem 0.4rem; border-radius: 0.6rem;
+  background: #1c2540; border: 0.16rem solid #fff8; font-size: 1.4rem; line-height: 1.15;
+}
+#build button b { display: block; font-size: 0.8rem; font-weight: 700; }
+#build button small { display: block; font-size: 0.8rem; }
+#build button.sel { border-color: #ffd35a; background: #5c4700; box-shadow: 0 0 0 0.16rem #ffd35a; }
+#build button.poor { opacity: .5; border-style: dashed; }
+
+.overlay {
+  position: fixed; inset: 0; background: #070b18f2; display: flex;
+  align-items: center; justify-content: center; padding: 0.8rem;
+}
+.panel {
+  max-width: 34rem; width: 100%; max-height: 100%; overflow-y: auto; touch-action: pan-y;
+  background: #121a30; border: 0.12rem solid #fff6; border-radius: 1rem; padding: 1.2rem; text-align: center;
+}
+h1 { margin: 0; font-size: 2.75rem; letter-spacing: 0.5rem; color: #ffd35a; }
+#over h1, #opts h1 { font-size: 1.8rem; letter-spacing: 0.06rem; }
+.sub { margin: 0 0 0.75rem; font-style: italic; }
+.story { text-align: left; font-size: 1.05rem; line-height: 1.55; }
+.story p { margin: 0 0 0.6rem; }
+#overText { font-size: 1.15rem; line-height: 1.5; }
+.help { text-align: left; font-size: 1rem; line-height: 1.55; background: #0008; padding: 0.7rem; border-radius: 0.6rem; margin: 0.7rem 0 0.9rem; }
+.big {
+  display: block; width: 100%; margin-top: 0.6rem; padding: 0.9rem; border-radius: 0.75rem;
+  background: #ffd35a; color: #1a1400; font-weight: 800; font-size: 1.2rem;
+}
+#continue { background: #7fd1ff; }
+.big.alt { background: #1c2540; color: #fff; border: 0.12rem solid #fff; }
+
+.row {
+  display: flex; align-items: center; gap: 0.6rem; text-align: left; font-size: 1.1rem; font-weight: 700;
+  padding: 0.6rem 0; border-bottom: 0.06rem solid #fff3;
+}
+.row { flex-wrap: wrap; }
+.row > span:first-child { flex: 1 1 7rem; }
+.step { display: flex; align-items: center; gap: 0.4rem; }
+.note { font-size: 0.95rem; text-align: left; margin: 0.6rem 0 0; }
+.row output { min-width: 3.6rem; text-align: center; font-size: 1.2rem; }
+.row button {
+  min-width: 3.2rem; height: 3.2rem; padding: 0 0.8rem; border-radius: 0.6rem; background: #1c2540;
+  border: 0.12rem solid #fff; font-size: 1.3rem; font-weight: 800;
+}
+.row button.toggle[aria-pressed="true"] { background: #1f7a35; }
+
+/* Contraste élevé */
+body.hc #top, body.hc #build, body.hc #toast { background: #000; }
+body.hc .panel { background: #000; border-color: #fff; }
+body.hc .help { background: #1a1a1a; }
+body.hc #joy { background: #000a; border-color: #fff; }
+body.hc #actions button, body.hc #build button, body.hc #tools button { background: #000; border-color: #fff; }
+body.hc #actions #act { background: #0b4d14; }
+body.hc #build button.sel { background: #5c4700; border-color: #ffd35a; }
+body.hc #actions button.on { background: #b36b00; }
