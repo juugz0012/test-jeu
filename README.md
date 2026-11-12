@@ -38,8 +38,26 @@ Dix nuits. Le jour, coupe, taille, cueille, bâtis. La nuit, ne cours pas, ne fr
 | Se déplacer | joystick (pousser à moitié = discret) | ZQSD / flèches |
 | Récolter | bouton ⛏️ (maintenir) | Espace / E |
 | Discret | bouton 🤫 | Maj |
-| Manger | bouton 🍒 | F |
+| Manger | bouton 🍒 en haut (affiche le nombre de baies) | F |
+| Zoom | pincer, boutons + / − | + / −, molette |
+| Pause et réglages | bouton ⚙️ | P |
 | Construire | choisir un objet puis toucher une case | 1-7 puis clic |
+
+## Accessibilité (basse vision)
+
+Réglages accessibles depuis le menu et, en jeu, par le bouton ⚙️ (qui met aussi la partie en pause) :
+
+- **Zoom du jeu** : pincer à deux doigts, boutons + / −, molette ou touches + / −.
+- **Taille de l'interface** : textes, jauges et boutons de 75 % à 200 % (limité à ce que l'écran peut contenir).
+- **Contraste élevé** (activé par défaut) : fonds noirs, bordures blanches, nuit moins sombre,
+  contour blanc autour du joueur et contour coloré autour des Rôdeurs.
+- **Sons d'alerte** : battement de cœur qui accélère quand un Rôdeur approche, double bip quand tu es repéré,
+  sons distincts pour le crépuscule, la nuit, l'aube, la récolte et les coups.
+- **Vibrations** (téléphones compatibles) : repéré, blessé, tombée de la nuit.
+- **Flèches au bord de l'écran** : direction des Rôdeurs proches hors champ
+  (jaune = il rôde, orange = attiré par un leurre, rouge = il te poursuit).
+
+Les réglages sont mémorisés sur l'appareil.
 
 ## Lancer en local
 

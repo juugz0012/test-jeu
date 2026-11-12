@@ -1,4 +1,4 @@
-const CACHE = 'tapi-v1';
+const CACHE = 'tapi-v2';
 const ASSETS = [
   './', 'index.html', 'style.css', 'game.js', 'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png',
