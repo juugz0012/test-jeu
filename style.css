@@ -1,0 +1,98 @@
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  margin: 0; height: 100%; overflow: hidden; background: #0b1020; color: #eef;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  touch-action: none; user-select: none; -webkit-user-select: none;
+  overscroll-behavior: none;
+}
+canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+.hidden { display: none !important; }
+
+#hud { position: fixed; inset: 0; pointer-events: none; }
+#hud > * { pointer-events: auto; }
+
+#top {
+  position: absolute; left: 0; right: 0; top: 0;
+  padding: calc(6px + env(safe-area-inset-top)) 10px 6px;
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  background: linear-gradient(#000a, #0000); pointer-events: none;
+  font-size: 14px; text-shadow: 0 1px 2px #000;
+}
+#clock { min-width: 110px; }
+#phase { font-weight: 700; display: block; margin-bottom: 3px; }
+.bar { height: 8px; width: 100%; background: #0008; border-radius: 4px; overflow: hidden; border: 1px solid #fff3; }
+.bar i { display: block; height: 100%; width: 50%; background: #ffd35a; }
+.bar.hp i { background: #e5484d; }
+.bar.food i { background: #c9537a; }
+.bar.noise i { background: #7fd1ff; }
+#stats { display: flex; flex-direction: column; gap: 2px; width: 120px; }
+.stat { display: flex; align-items: center; gap: 4px; font-size: 11px; }
+#inv { display: flex; gap: 10px; margin-left: auto; font-size: 15px; }
+
+#toast {
+  position: absolute; top: 92px; left: 50%; transform: translateX(-50%);
+  background: #000b; padding: 8px 14px; border-radius: 16px; font-size: 14px;
+  opacity: 0; transition: opacity .3s; pointer-events: none; text-align: center;
+  max-width: 90vw;
+}
+#toast.show { opacity: 1; }
+
+#joy {
+  position: absolute; left: calc(18px + env(safe-area-inset-left)); bottom: calc(92px + env(safe-area-inset-bottom));
+  width: 124px; height: 124px; border-radius: 50%;
+  background: #fff1; border: 2px solid #fff4;
+}
+#knob {
+  position: absolute; left: 50%; top: 50%; width: 52px; height: 52px; margin: -26px;
+  border-radius: 50%; background: #fff6; pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) { #joy { opacity: .35; } }
+
+#actions {
+  position: absolute; right: calc(14px + env(safe-area-inset-right)); bottom: calc(92px + env(safe-area-inset-bottom));
+  display: flex; gap: 8px; align-items: flex-end;
+}
+button { font: inherit; color: inherit; border: 0; cursor: pointer; }
+#actions button {
+  width: 62px; height: 62px; border-radius: 50%; background: #1c2540d9;
+  border: 2px solid #fff4; font-size: 22px; line-height: 1; padding: 0;
+}
+#actions button small { display: block; font-size: 9px; margin-top: 2px; opacity: .85; }
+#actions #act { width: 80px; height: 80px; font-size: 28px; background: #2f4a2fd9; }
+#actions button.on, #actions button:active { background: #c98a1bd9; }
+
+#build {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 6px 8px calc(8px + env(safe-area-inset-bottom));
+  display: flex; gap: 6px; overflow-x: auto; justify-content: safe center;
+  background: linear-gradient(#0000, #000b); scrollbar-width: none;
+}
+#build::-webkit-scrollbar { display: none; }
+#build button {
+  flex: 0 0 auto; min-width: 66px; padding: 5px 6px; border-radius: 10px;
+  background: #1c2540e6; border: 2px solid #fff3; font-size: 20px; line-height: 1.1;
+}
+#build button b { display: block; font-size: 10px; font-weight: 600; }
+#build button small { display: block; font-size: 10px; opacity: .8; }
+#build button.sel { border-color: #ffd35a; background: #4a3d12e6; }
+#build button.poor { opacity: .45; }
+
+.overlay {
+  position: fixed; inset: 0; background: #070b18e6; display: flex;
+  align-items: center; justify-content: center; padding: 14px;
+}
+.panel {
+  max-width: 520px; width: 100%; max-height: 100%; overflow-y: auto; touch-action: pan-y;
+  background: #121a30; border: 1px solid #fff2; border-radius: 16px; padding: 20px; text-align: center;
+}
+h1 { margin: 0; font-size: 44px; letter-spacing: 8px; color: #ffd35a; }
+#over h1 { font-size: 30px; letter-spacing: 2px; }
+.sub { margin: 0 0 12px; opacity: .7; font-style: italic; }
+.story { text-align: left; font-size: 14px; line-height: 1.5; }
+.story p { margin: 0 0 8px; }
+.help { text-align: left; font-size: 13px; line-height: 1.5; background: #0006; padding: 10px; border-radius: 10px; margin: 10px 0 14px; }
+.big {
+  display: block; width: 100%; margin-top: 8px; padding: 13px; border-radius: 12px;
+  background: #ffd35a; color: #1a1400; font-weight: 700; font-size: 17px;
+}
+#continue { background: #7fd1ff; }

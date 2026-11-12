@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>TAPI — survivre sans un bruit</title>
+<meta name="description" content="Construis ton abri le jour, cache-toi des Rôdeurs la nuit.">
+<meta name="theme-color" content="#0b1020">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="game"></canvas>
+
+<div id="hud" class="hidden">
+  <div id="top">
+    <div id="clock">
+      <span id="phase">Jour 1</span>
+      <div class="bar"><i id="clockbar"></i></div>
+    </div>
+    <div id="stats">
+      <div class="stat"><span>❤️</span><div class="bar hp"><i id="hpbar"></i></div></div>
+      <div class="stat"><span>🍒</span><div class="bar food"><i id="foodbar"></i></div></div>
+      <div class="stat"><span>👂</span><div class="bar noise"><i id="noisebar"></i></div></div>
+    </div>
+    <div id="inv">
+      <span>🪵 <b id="wood">0</b></span>
+      <span>🪨 <b id="stone">0</b></span>
+      <span>🍒 <b id="berries">0</b></span>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <div id="joy"><i id="knob"></i></div>
+
+  <div id="actions">
+    <button id="eat" title="Manger (F)">🍒<small>Manger</small></button>
+    <button id="sneak" title="Discret (Maj)">🤫<small>Discret</small></button>
+    <button id="act" title="Récolter (Espace)">⛏️<small>Récolter</small></button>
+  </div>
+
+  <div id="build"></div>
+</div>
+
+<div id="menu" class="overlay">
+  <div class="panel">
+    <h1>TAPI</h1>
+    <p class="sub">survivre sans un bruit</p>
+    <div class="story">
+      <p>Personne ne sait d'où ils sont venus. Un soir d'automne, les lumières de la vallée se sont éteintes une à une, et les <b>Rôdeurs</b> sont sortis des bois.</p>
+      <p>Ils n'y voient presque rien. Mais ils <b>entendent tout</b> : une branche qui craque, une hache contre un tronc, des pas trop pressés. Et la lueur d'un feu les attire comme des papillons de nuit. Au premier rayon du soleil, ils tombent en cendres… jusqu'au soir suivant.</p>
+      <p>Tu es le dernier du convoi. Dans ton sac, une radio à manivelle répète le même message : <i>« Hélicoptère d'évacuation — clairière nord — dans dix jours. Tenez bon. »</i></p>
+      <p>Dix nuits. Le jour, coupe, taille, cueille, bâtis. La nuit, ne cours pas, ne frappe rien. <b>Tapis-toi.</b></p>
+    </div>
+    <div class="help">
+      <b>Jour</b> : récolte bois, pierre et baies, construis ton abri.<br>
+      <b>Nuit</b> : reste immobile ou avance en mode discret. Courir et récolter font du bruit.<br>
+      Les murs bloquent leur vue, la <b>cachette</b> te rend invisible, le <b>leurre</b> les attire ailleurs, les <b>pièges</b> les tuent.<br>
+      <small>Clavier : ZQSD/flèches · Espace récolter · Maj discret · F manger · 1-7 construire</small>
+    </div>
+    <button id="continue" class="big hidden">Continuer</button>
+    <button id="new" class="big">Nouvelle partie</button>
+  </div>
+</div>
+
+<div id="over" class="overlay hidden">
+  <div class="panel">
+    <h1 id="overTitle"></h1>
+    <p id="overText"></p>
+    <button id="overBtn" class="big"></button>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
